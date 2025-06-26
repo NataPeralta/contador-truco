@@ -26,8 +26,7 @@ export const Header: React.FC<HeaderProps> = ({
             {/* Toggle de tema */}
             <Button
               onClick={onThemeToggle}
-              variant="transparent"
-              className="text-white hover:bg-white/20"
+              variant='gray'
               aria-label="Cambiar tema"
             >
               {resolvedTheme === 'dark' ? (

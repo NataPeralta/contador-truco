@@ -2,26 +2,23 @@ import { useState } from 'react';
 import type { TeamManagerProps, Team } from '../types';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
-import { useAlerts } from '../hooks/useAlerts';
 
 export const TeamManager = ({
   teams,
   onAddTeam,
   onUpdateTeamName,
   onRemoveTeam,
-  gameStatus
+  gameStatus,
+  showConfirm
 }: TeamManagerProps) => {
   const [newTeamName, setNewTeamName] = useState('');
   const [editingTeam, setEditingTeam] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
 
-  const { showAlert, showConfirm } = useAlerts();  
-
   const handleAddTeam = () => {
     if (newTeamName.trim()) {
       onAddTeam(newTeamName.trim());
       setNewTeamName('');
-      showAlert(`Equipo "${newTeamName.trim()}" agregado correctamente`, 'Equipo agregado correctamente', 'success');
     }
   };
 
@@ -35,7 +32,6 @@ export const TeamManager = ({
       onUpdateTeamName(editingTeam, editName.trim());
       setEditingTeam(null);
       setEditName('');
-      showAlert(`Nombre del equipo actualizado a "${editName.trim()}"`, 'Nombre del equipo actualizado correctamente', 'success');
     }
   };
 
@@ -46,8 +42,8 @@ export const TeamManager = ({
 
   const handleRemoveTeam = (team: Team) => {
     showConfirm({
-      title: `Equipo "${team.name}" eliminado correctamente`,
-      message: 'Equipo eliminado correctamente',
+      title: 'Confirmar eliminación',
+      message: `¿Estás seguro de que quieres eliminar el equipo "${team.name}"? Esta acción no se puede deshacer.`,
       onConfirm: () => {
         onRemoveTeam(team.id);
       }
@@ -78,51 +74,15 @@ export const TeamManager = ({
 
       {/* Lista de equipos */}
       <div className="space-y-3 mb-6">
-        {teams.map((team, index) => (
+        {teams.map((team) => (
           <div 
             key={team.id}
             className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 p-4 rounded-lg border border-gray-200 dark:border-gray-600"
           >
             <div className="flex items-center gap-3 flex-1">
-              <div className="flex items-center gap-2">
-                <span className="text-sm font-bold text-gray-500 dark:text-gray-400">
-                  #{index + 1}
-                </span>
-                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
-              </div>
+              <div className="w-3 h-3 rounded-full bg-blue-500"></div>
               
-              {editingTeam === team.id ? (
-                <div className="flex items-center gap-2 flex-1">
-                  <Input
-                    type="text"
-                    value={editName}
-                    onChange={(e) => setEditName(e.target.value)}
-                    className="flex-1"
-                    placeholder="Nombre del equipo"
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') handleSaveEdit();
-                      if (e.key === 'Escape') handleCancelEdit();
-                    }}
-                  />
-                  <Button
-                    onClick={handleSaveEdit}
-                    variant="green"
-                    size="sm"
-                    className="w-min"
-                    disabled={!editName.trim()}
-                  >
-                    ✅
-                  </Button>
-                  <Button
-                    onClick={handleCancelEdit}
-                    variant="gray"
-                    size="sm"
-                    className="w-min"
-                  >
-                    ❌
-                  </Button>
-                </div>
-              ) : (
+              {editingTeam !== team.id && (
                 <div className="flex items-center gap-3 flex-1">
                   <span className="text-gray-800 dark:text-white font-medium">
                     {team.name}
@@ -137,6 +97,39 @@ export const TeamManager = ({
             </div>
 
             <div className="flex items-center gap-2">
+              {editingTeam === team.id && (
+                <> 
+                <Input
+                  type="text"
+                  value={editName}
+                  onChange={(e) => setEditName(e.target.value)}
+                  className="flex-1"
+                  placeholder="Nombre del equipo"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleSaveEdit();
+                    if (e.key === 'Escape') handleCancelEdit();
+                  }}
+                />
+                <Button
+                  onClick={handleSaveEdit}
+                  variant="green"
+                  size="sm"
+                  className="w-min"
+                  disabled={!editName.trim()}
+                >
+                  ✅
+                </Button>
+                <Button
+                  onClick={handleCancelEdit}
+                  variant="gray"
+                  size="sm"
+                  className="w-min"
+                >
+                  ❌
+                </Button>
+                </>
+              )}
+              
               {!isGameActive && editingTeam !== team.id && (
                 <Button
                   onClick={() => handleStartEdit(team)}
@@ -149,7 +142,7 @@ export const TeamManager = ({
                 </Button>
               )}
               
-              {canRemoveTeam && !isGameActive && (
+              {canRemoveTeam && (
                 <Button
                   onClick={() => handleRemoveTeam(team)}
                   variant="red"
@@ -188,6 +181,7 @@ export const TeamManager = ({
               size="sm"
               className="w-min"
               disabled={!newTeamName.trim()}
+              aria-label="Agregar equipo"
             >
               Agregar
             </Button>

@@ -30,6 +30,7 @@ function App() {
   const {
     alert,
     confirm,
+    showAlert,
     showConfirm,
     closeAlert,
     closeConfirm
@@ -48,13 +49,9 @@ function App() {
     showConfirm({
       title: 'Reiniciar juego',
       message: '¿Estás seguro de que quieres reiniciar el juego? Se perderán todos los datos de la partida actual.',
-      onCancel: () => {
-        closeConfirm();
-      },
       onConfirm: () => {
         resetGame();
-        closeConfirm();
-        }
+      }
     });
   };
 
@@ -82,6 +79,8 @@ function App() {
               onRemoveTeam={removeTeam}
               onUpdateTeamName={updateTeamName}
               gameStatus={gameState.gameStatus}
+              showAlert={showAlert}
+              showConfirm={showConfirm}
             />
           </div>
         ) : (

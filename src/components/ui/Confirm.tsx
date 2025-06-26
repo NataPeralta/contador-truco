@@ -15,17 +15,17 @@ export const Confirm: React.FC<ConfirmProps> = ({
 }) => {
   const variantClasses = {
     warning: {
-      titleColor: 'text-uno-yellow dark:text-uno-yellow-light',
+      titleColor: 'text-yellow-600 dark:text-yellow-400',
       confirmVariant: 'yellow' as const,
       cancelVariant: 'gray' as const
     },
     danger: {
-      titleColor: 'text-uno-red dark:text-uno-red-light',
+      titleColor: 'text-red-600 dark:text-red-400',
       confirmVariant: 'red' as const,
       cancelVariant: 'gray' as const
     },
     default: {
-      titleColor: 'text-uno-blue dark:text-uno-blue-light',
+      titleColor: 'text-blue-600 dark:text-blue-400',
       confirmVariant: 'blue' as const,
       cancelVariant: 'gray' as const
     }
@@ -65,11 +65,9 @@ export const Confirm: React.FC<ConfirmProps> = ({
         </div>
       }
     >
-      <div className="p-6">
-        <p className={`${titleColor} text-center text-lg`}>
-          {message}
-        </p>
-      </div>
+      <p className={`${titleColor} text-center text-lg`}>
+        {message}
+      </p>
     </Modal>
   );
 }; 

@@ -12,16 +12,20 @@ export const Alert: React.FC<AlertProps> = ({
 }) => {
    const variantClasses = {
     success: {
-          titleColor: 'text-uno-green dark:text-uno-green-light',
+          titleColor: 'text-green-600 dark:text-green-400',
           buttonVariant: 'green' as const
         },
     warning: {
-          titleColor: 'text-uno-yellow dark:text-uno-yellow-light',
+          titleColor: 'text-yellow-600 dark:text-yellow-400',
           buttonVariant: 'yellow' as const
         },
     error: {
-          titleColor: 'text-uno-red dark:text-uno-red-light',
+          titleColor: 'text-red-600 dark:text-red-400',
           buttonVariant: 'red' as const
+        },
+    info: {
+          titleColor: 'text-blue-600 dark:text-blue-400',
+          buttonVariant: 'blue' as const
         }
   };
 
@@ -47,11 +51,9 @@ export const Alert: React.FC<AlertProps> = ({
         </div>
       }
     >
-      <div className="p-6">
-        <p className={`${titleColor} text-center text-lg`}>
-          {message}
-        </p>
-      </div>
+      <p className={`${titleColor} text-center text-lg`}>
+        {message}
+      </p>
     </Modal>
   );
 }; 
