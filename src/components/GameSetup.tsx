@@ -38,7 +38,7 @@ export const GameSetup = ({
         {/* Estado de equipos */}
         <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-4 border border-gray-200 dark:border-gray-600">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-4">
               <span className="text-2xl">👥</span>
               <div>
                 <p className="text-sm font-medium text-gray-700 dark:text-gray-300">

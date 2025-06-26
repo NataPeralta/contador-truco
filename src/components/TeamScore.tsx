@@ -2,9 +2,13 @@ import type { TeamScoreProps } from '../types';
 import { Button } from './ui/Button';
 import { Input } from './ui/Input';
 import { useState } from 'react';
-export const TeamScore = ({ team, onAddPoints, totalPoints, onUpdateTeamName }: TeamScoreProps) => {
+import { useAlerts } from '../hooks/useAlerts';
+
+export const TeamScore = ({ team, totalPoints, onUpdateTeamName }: TeamScoreProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editName, setEditName] = useState(team.name);
+  
+  const { showAlert } = useAlerts();
   
   const isWinning = team.score >= totalPoints;
   const progressPercentage = Math.min((team.score / totalPoints) * 100, 100);
@@ -18,7 +22,8 @@ export const TeamScore = ({ team, onAddPoints, totalPoints, onUpdateTeamName }: 
   const handleEditSave = () => {
     if (editName.trim()) {
       onUpdateTeamName(team.id, editName.trim());
-    }
+      showAlert(`Nombre del equipo actualizado a "${editName.trim()}"`, 'Nombre del equipo actualizado correctamente', 'success');
+    } 
     setIsEditing(false);
   };
 
@@ -75,13 +80,6 @@ export const TeamScore = ({ team, onAddPoints, totalPoints, onUpdateTeamName }: 
             <span className="ml-2 text-sm opacity-50">✏️</span>
           </h3>
         )}
-        
-        <div className="flex justify-center items-center gap-2">
-          <span className="w-3 h-3 rounded-full bg-blue-500"></span>
-          <span className="text-sm text-gray-600 dark:text-gray-400">
-            {team.players.length} jugadores
-          </span>
-        </div>
       </div>
       
       {/* Puntuación principal */}
@@ -122,36 +120,7 @@ export const TeamScore = ({ team, onAddPoints, totalPoints, onUpdateTeamName }: 
           <div className="bg-green-100 dark:bg-green-900/20 text-green-800 dark:text-green-300 px-4 py-2 rounded-lg font-medium">
             🏆 ¡Victoria!
           </div>
-        ) : (
-          <div className="text-sm text-gray-500 dark:text-gray-400">
-            {progressPercentage >= 80 ? '¡Casi gana!' : 
-             progressPercentage >= 60 ? 'Bien posicionado' :
-             progressPercentage >= 40 ? 'En carrera' : 'Comenzando'}
-          </div>
-        )}
-      </div>
-
-      {/* Botones de puntos */}
-      <div className="space-y-3">
-        <div className="text-center mb-3">
-          <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-            Agregar Puntos:
-          </span>
-        </div>
-        
-        <div className="grid grid-cols-3 gap-3">
-          {[1, 2, 3].map((points) => (
-            <Button
-              key={points}
-              onClick={() => onAddPoints(team.id, points)}
-              disabled={isWinning}
-              variant="blue"
-              size="md"
-            >
-              +{points}
-            </Button>
-          ))}
-        </div>
+        ) : null}
       </div>
     </div>
   );

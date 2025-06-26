@@ -53,7 +53,7 @@ export const PendingPoints = ({
             <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">
               Resumen por Equipo:
             </h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {teamPoints.map((team) => (
                 <div 
                   key={team.teamId}
@@ -85,7 +85,7 @@ export const PendingPoints = ({
                     key={index}
                     className="flex items-center justify-between bg-gray-50 dark:bg-gray-700 px-4 py-3 rounded-lg border border-gray-200 dark:border-gray-600"
                   >
-                    <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-4">
                       <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
                         +{point.points}
                       </span>
@@ -111,7 +111,7 @@ export const PendingPoints = ({
                     <Button
                       onClick={() => onRemovePoint(globalIndex)}
                       variant="red"
-                      className="p-1 rounded"
+                      className="w-min"
                       aria-label="Eliminar punto"
                       size="sm"
                     >
@@ -126,26 +126,21 @@ export const PendingPoints = ({
           </div>
 
           {/* Botones de acción */}
-          <div className="flex gap-3 pt-4 border-t border-gray-200 dark:border-gray-600">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-2 pt-4 border-t border-gray-200 dark:border-gray-600">
             <Button
               onClick={onConfirm}
               disabled={!hasPoints}
-              className="flex-1"
               variant="green"
             >
-              <span className="flex items-center gap-2">
-                <span>✅</span>
-                Confirmar Puntos
-              </span>
+              ✅ Confirmar Puntos
             </Button>
             
             <Button
               onClick={() => pendingPoints.forEach((_) => onRemovePoint(0))}
               variant="red"
-              className="px-4"
               aria-label="Limpiar todos los puntos"
             > 
-              🗑️
+              🗑️ Limpiar Puntos
             </Button>
           </div>
         </div>

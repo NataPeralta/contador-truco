@@ -5,6 +5,9 @@ import { VictoryModal } from './components/VictoryModal';
 import { TeamManager } from './components/TeamManager';
 import { useGameState } from './hooks/useGameState';
 import { useTheme } from './hooks/useTheme';
+import { useAlerts } from './hooks/useAlerts';
+import { Alert } from './components/ui/Alert';
+import { Confirm } from './components/ui/Confirm';
 
 function App() {
   const {
@@ -23,6 +26,15 @@ function App() {
     canStartGame
   } = useGameState();
 
+  // Hook para manejar alertas y confirmaciones
+  const {
+    alert,
+    confirm,
+    showConfirm,
+    closeAlert,
+    closeConfirm
+  } = useAlerts();
+
   // Usar el tema desde el estado del juego
   const { resolvedTheme } = useTheme(gameState.settings.theme);
 
@@ -32,9 +44,18 @@ function App() {
     updateSettings({ theme: newTheme });
   };
 
-  const handleOpenSettings = () => {
-    // TODO: Implementar configuración
-    console.log('Abrir configuración');
+  const handleResetGame = () => {
+    showConfirm({
+      title: 'Reiniciar juego',
+      message: '¿Estás seguro de que quieres reiniciar el juego? Se perderán todos los datos de la partida actual.',
+      onCancel: () => {
+        closeConfirm();
+      },
+      onConfirm: () => {
+        resetGame();
+        closeConfirm();
+        }
+    });
   };
 
   return (
@@ -42,7 +63,6 @@ function App() {
       <Header 
         resolvedTheme={resolvedTheme}
         onThemeToggle={handleThemeToggle}
-        onOpenSettings={handleOpenSettings}
       />
 
       <main className="container mx-auto px-4 py-8">
@@ -73,7 +93,7 @@ function App() {
             }
             onRemovePoint={removePendingPoints}
             onConfirmPoints={confirmPoints}
-            onResetGame={resetGame}
+            onResetGame={handleResetGame}
             onUpdateTeamName={updateTeamName}
             hasPendingPoints={hasPendingPoints}
           />
@@ -86,6 +106,27 @@ function App() {
           onNewGame={resetGame}
         />
       )}
+
+      {/* Alertas */}
+      <Alert
+        isOpen={alert.isOpen}
+        onClose={closeAlert}
+        title={alert.title}
+        message={alert.message}
+        type={alert.type}
+      />
+
+      {/* Confirmaciones */}
+      <Confirm
+        isOpen={confirm.isOpen}
+        onClose={closeConfirm}
+        onConfirm={confirm.onConfirm}
+        title={confirm.title}
+        message={confirm.message}
+        confirmText="Confirmar"
+        cancelText="Cancelar"
+        type="warning"
+      />
     </div>
   );
 }

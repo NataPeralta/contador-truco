@@ -42,11 +42,9 @@ export const RoundHistory = ({ history, teams }: RoundHistoryProps) => {
               {/* Header de la ronda */}
               <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 px-4 py-3 rounded-t-lg border-b border-gray-100 dark:border-gray-600">
                 <div className="flex justify-between items-center">
-                  <div className="flex items-center gap-3">
-                    <span className="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">
-                      Ronda {round.roundNumber}
-                    </span>
-                  </div>
+                  <span className="bg-blue-500 text-white text-sm font-bold px-3 py-1 rounded-full">
+                    Ronda {round.roundNumber}
+                  </span>
                   <div className="text-right">
                     <div className="text-xs text-gray-400 dark:text-gray-500">
                       Total: +{getTotalPoints(round.points)} pts

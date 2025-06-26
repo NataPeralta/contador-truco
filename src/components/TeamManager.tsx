@@ -2,22 +2,26 @@ import { useState } from 'react';
 import type { TeamManagerProps, Team } from '../types';
 import { Input } from './ui/Input';
 import { Button } from './ui/Button';
+import { useAlerts } from '../hooks/useAlerts';
 
 export const TeamManager = ({
   teams,
   onAddTeam,
-  onRemoveTeam,
   onUpdateTeamName,
+  onRemoveTeam,
   gameStatus
 }: TeamManagerProps) => {
   const [newTeamName, setNewTeamName] = useState('');
   const [editingTeam, setEditingTeam] = useState<string | null>(null);
   const [editName, setEditName] = useState('');
 
+  const { showAlert, showConfirm } = useAlerts();  
+
   const handleAddTeam = () => {
     if (newTeamName.trim()) {
       onAddTeam(newTeamName.trim());
       setNewTeamName('');
+      showAlert(`Equipo "${newTeamName.trim()}" agregado correctamente`, 'Equipo agregado correctamente', 'success');
     }
   };
 
@@ -31,12 +35,23 @@ export const TeamManager = ({
       onUpdateTeamName(editingTeam, editName.trim());
       setEditingTeam(null);
       setEditName('');
+      showAlert(`Nombre del equipo actualizado a "${editName.trim()}"`, 'Nombre del equipo actualizado correctamente', 'success');
     }
   };
 
   const handleCancelEdit = () => {
     setEditingTeam(null);
     setEditName('');
+  };
+
+  const handleRemoveTeam = (team: Team) => {
+    showConfirm({
+      title: `Equipo "${team.name}" eliminado correctamente`,
+      message: 'Equipo eliminado correctamente',
+      onConfirm: () => {
+        onRemoveTeam(team.id);
+      }
+    });
   };
 
   const canRemoveTeam = teams.length > 2;
@@ -136,7 +151,7 @@ export const TeamManager = ({
               
               {canRemoveTeam && !isGameActive && (
                 <Button
-                  onClick={() => onRemoveTeam(team.id)}
+                  onClick={() => handleRemoveTeam(team)}
                   variant="red"
                   size="sm"
                   className="w-min"

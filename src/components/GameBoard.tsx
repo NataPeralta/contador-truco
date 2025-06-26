@@ -3,6 +3,7 @@ import { TeamScore } from './TeamScore';
 import { CantoButtons } from './CantoButtons';
 import { PendingPoints } from './PendingPoints';
 import { RoundHistory } from './RoundHistory';
+import { useAlerts } from '../hooks/useAlerts';
 import type { GameBoardProps } from '../types';
 
 export const GameBoard = ({
@@ -15,6 +16,22 @@ export const GameBoard = ({
   onUpdateTeamName,
   hasPendingPoints
 }: GameBoardProps) => {
+  const { showAlert } = useAlerts();
+
+  const handleConfirmPoints = () => {
+    onConfirmPoints();
+    showAlert('Puntos confirmados correctamente', 'Puntos confirmados correctamente', 'success');
+  };
+
+  const handleAddCanto = (teamId: string, cantoType: string, points: number) => {
+    onAddCanto(teamId, cantoType, points);
+    const team = gameState.teams.find(t => t.id === teamId);
+    const cantoName = cantoType === 'truco' ? 'Truco' : 
+                     cantoType === 'envido' ? 'Envido' : 
+                     cantoType === 'flor' ? 'Flor' : cantoType;
+    showAlert(`${cantoName} agregado para ${team?.name} (+${points} puntos)`, `${cantoName} agregado para ${team?.name} (+${points} puntos)`, 'success');
+  };
+
   return (
     <div className="space-y-6">
       {/* Header del juego */}
@@ -46,7 +63,7 @@ export const GameBoard = ({
       </div>
 
       {/* Equipos */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-2 gap-4">
         {gameState.teams.map((team) => (
           <TeamScore
             key={team.id}
@@ -61,7 +78,7 @@ export const GameBoard = ({
       {/* Cantos */}
       <CantoButtons
         teams={gameState.teams}
-        onAddCanto={onAddCanto}
+        onAddCanto={handleAddCanto}
       />
 
       {/* Puntos pendientes */}
@@ -69,7 +86,7 @@ export const GameBoard = ({
         pendingPoints={gameState.pendingPoints}
         teams={gameState.teams}
         onRemovePoint={onRemovePoint}
-        onConfirm={onConfirmPoints}
+        onConfirm={handleConfirmPoints}
         hasPoints={hasPendingPoints}
       />
 
