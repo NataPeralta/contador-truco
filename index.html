@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="es">
+
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon"
+      type="image/svg+xml"
+      href="./logo.png" />
+    <meta name="viewport"
+      content="width=device-width, initial-scale=1.0" />
+    <!-- SEO Meta Tags -->
+    <title>Contador Truco - Aplicación Gratuita para Contar Puntos | Juego Truco</title>
+    <meta name="description"
+      content="Contador de puntos gratuito para el juego Truco. Aplicación web moderna para llevar el conteo de puntos, gestionar jugadores y ver historial de rondas. Perfecta para partidas de Truco con amigos y familia." />
+    <meta name="keywords"
+      content="contador Truco, juego Truco, puntos Truco, contador puntos, Truco game, score tracker, contador cartas Truco, aplicación Truco, juego de cartas, contador gratis" />
+    <meta name="author"
+      content="NataPeralta" />
+    <meta name="robots"
+      content="index, follow" />
+    <meta name="language"
+      content="Spanish" />
+    <meta name="revisit-after"
+      content="7 days" />
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type"
+      content="website" />
+    <meta property="og:url"
+      content="https://nataperalta.github.io/contador-Truco/" />
+    <meta property="og:title"
+      content="Contador Truco - Aplicación Gratuita para Contar Puntos" />
+    <meta property="og:description"
+      content="Contador de puntos gratuito para el juego Truco. Aplicación web moderna para llevar el conteo de puntos, gestionar jugadores y ver historial de rondas." />
+    <meta property="og:image"
+      content="https://nataperalta.github.io/contador-Truco/logo.png" />
+    <meta property="og:image:width"
+      content="512" />
+    <meta property="og:image:height"
+      content="512" />
+    <meta property="og:site_name"
+      content="Contador Truco" />
+    <meta property="og:locale"
+      content="es_ES" />
+    <!-- Twitter -->
+    <meta property="twitter:card"
+      content="summary_large_image" />
+    <meta property="twitter:url"
+      content="https://nataperalta.github.io/contador-Truco/" />
+    <meta property="twitter:title"
+      content="Contador Truco - Aplicación Gratuita para Contar Puntos" />
+    <meta property="twitter:description"
+      content="Contador de puntos gratuito para el juego Truco. Aplicación web moderna para llevar el conteo de puntos, gestionar jugadores y ver historial de rondas." />
+    <meta property="twitter:image"
+      content="https://nataperalta.github.io/contador-Truco/logo.png" />
+    <!-- Additional SEO -->
+    <meta name="theme-color"
+      content="#0000FF" />
+    <meta name="msapplication-TileColor"
+      content="#0000FF" />
+    <meta name="apple-mobile-web-app-capable"
+      content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style"
+      content="default" />
+    <meta name="apple-mobile-web-app-title"
+      content="Contador Truco" />
+    <!-- Canonical URL -->
+    <link rel="canonical"
+      href="https://nataperalta.github.io/contador-Truco/" />
+    <!-- Manifest for PWA -->
+    <link rel="manifest"
+      href="/manifest.json" />
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect"
+      href="https://fonts.googleapis.com" />
+    <link rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin />
+    <script>
+      // Prevenir flash de tema no deseado
+      (function () {
+        try {
+          // Intentar obtener el tema del localStorage
+          const savedTheme = localStorage.getItem('truco-theme');
+          const savedGameState = localStorage.getItem('Truco-game-state');
+
+          let theme = 'system';
+
+          if (savedTheme) {
+            theme = savedTheme;
+          } else if (savedGameState) {
+            const parsed = JSON.parse(savedGameState);
+            theme = parsed.settings?.theme || 'system';
+          }
+
+          if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (error) {
+          console.error('Error loading theme:', error);
+        }
+      })();
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module"
+      src="/src/main.tsx"></script>
+  </body>
+
+</html>
