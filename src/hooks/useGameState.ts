@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import type { GameState, Team, RoundHistory, GameSettings } from '../types';
 
-const STORAGE_KEY = 'Truco-game-state';
+const STORAGE_KEY = 'truco-game-state';
 
 const initialSettings: GameSettings = {
   totalPoints: 30,

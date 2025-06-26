@@ -49,8 +49,8 @@ export const TeamManager = ({
           <h3 className="text-xl font-bold text-gray-800 dark:text-white">
             👥 Equipos Participantes
           </h3>
-          <span className="text-sm text-gray-500 dark:text-gray-400 bg-blue-100 dark:bg-blue-900/30 px-3 py-1 rounded-full border border-blue-200 dark:border-blue-800">
-            {teams.length} equipos
+          <span className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 bg-blue-100 dark:bg-blue-900/30 px-3 py-1 rounded-full border border-blue-200 dark:border-blue-800">
+            {teams.length} <span className="text-gray-500 dark:text-gray-400">equipos</span>
           </span>
         </div>
         
@@ -111,9 +111,6 @@ export const TeamManager = ({
                 <div className="flex items-center gap-3 flex-1">
                   <span className="text-gray-800 dark:text-white font-medium">
                     {team.name}
-                  </span>
-                  <span className="text-sm text-gray-500 dark:text-gray-400">
-                    ({team.players.length} jugadores)
                   </span>
                   {isGameActive && (
                     <span className="text-sm font-bold text-blue-600 dark:text-blue-400">

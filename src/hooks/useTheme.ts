@@ -2,17 +2,7 @@ import { useState, useEffect } from 'react';
 
 type Theme = 'light' | 'dark' | 'system';
 
-export const useTheme = (initialTheme: Theme = 'system') => {
-  const [theme, setTheme] = useState<Theme>(() => {
-    // Intentar obtener el tema guardado en localStorage
-    try {
-      const saved = localStorage.getItem('truco-theme');
-      return saved ? (saved as Theme) : initialTheme;
-    } catch {
-      return initialTheme;
-    }
-  });
-
+export const useTheme = (theme: Theme = 'system') => {
   const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(() => {
     // Determinar el tema inicial basado en la preferencia del sistema
     if (typeof window !== 'undefined') {
@@ -57,22 +47,7 @@ export const useTheme = (initialTheme: Theme = 'system') => {
     }
   }, [theme]);
 
-  // Guardar el tema en localStorage cuando cambie
-  useEffect(() => {
-    try {
-      localStorage.setItem('truco-theme', theme);
-    } catch {
-      // Ignorar errores de localStorage
-    }
-  }, [theme]);
-
-  const changeTheme = (newTheme: Theme) => {
-    setTheme(newTheme);
-  };
-
   return {
-    theme,
-    resolvedTheme,
-    changeTheme
+    resolvedTheme
   };
 }; 

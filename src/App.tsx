@@ -7,7 +7,6 @@ import { useGameState } from './hooks/useGameState';
 import { useTheme } from './hooks/useTheme';
 
 function App() {
-  const { resolvedTheme, changeTheme } = useTheme();
   const {
     gameState,
     setTotalPoints,
@@ -16,6 +15,7 @@ function App() {
     removePendingPoints,
     confirmPoints,
     resetGame,
+    updateSettings,
     updateTeamName,
     addTeam,
     removeTeam,
@@ -23,8 +23,13 @@ function App() {
     canStartGame
   } = useGameState();
 
+  // Usar el tema desde el estado del juego
+  const { resolvedTheme } = useTheme(gameState.settings.theme);
+
   const handleThemeToggle = () => {
-    changeTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+    const newTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+    // Actualizar en el estado del juego
+    updateSettings({ theme: newTheme });
   };
 
   const handleOpenSettings = () => {

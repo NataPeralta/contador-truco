@@ -26,13 +26,13 @@
     <meta property="og:type"
       content="website" />
     <meta property="og:url"
-      content="https://nataperalta.github.io/contador-Truco/" />
+      content="https://natapersonalta.github.io/contador-truco/" />
     <meta property="og:title"
       content="Contador Truco - Aplicación Gratuita para Contar Puntos" />
     <meta property="og:description"
       content="Contador de puntos gratuito para el juego Truco. Aplicación web moderna para llevar el conteo de puntos, gestionar jugadores y ver historial de rondas." />
     <meta property="og:image"
-      content="https://nataperalta.github.io/contador-Truco/logo.png" />
+      content="https://natapersonalta.github.io/contador-truco/logo.png" />
     <meta property="og:image:width"
       content="512" />
     <meta property="og:image:height"
@@ -45,13 +45,13 @@
     <meta property="twitter:card"
       content="summary_large_image" />
     <meta property="twitter:url"
-      content="https://nataperalta.github.io/contador-Truco/" />
+      content="https://natapersonalta.github.io/contador-truco/" />
     <meta property="twitter:title"
       content="Contador Truco - Aplicación Gratuita para Contar Puntos" />
     <meta property="twitter:description"
       content="Contador de puntos gratuito para el juego Truco. Aplicación web moderna para llevar el conteo de puntos, gestionar jugadores y ver historial de rondas." />
     <meta property="twitter:image"
-      content="https://nataperalta.github.io/contador-Truco/logo.png" />
+      content="https://natapersonalta.github.io/contador-truco/logo.png" />
     <!-- Additional SEO -->
     <meta name="theme-color"
       content="#0000FF" />
@@ -65,7 +65,7 @@
       content="Contador Truco" />
     <!-- Canonical URL -->
     <link rel="canonical"
-      href="https://nataperalta.github.io/contador-Truco/" />
+      href="https://natapersonalta.github.io/contador-truco/" />
     <!-- Manifest for PWA -->
     <link rel="manifest"
       href="/manifest.json" />
@@ -79,15 +79,11 @@
       // Prevenir flash de tema no deseado
       (function () {
         try {
-          // Intentar obtener el tema del localStorage
-          const savedTheme = localStorage.getItem('truco-theme');
-          const savedGameState = localStorage.getItem('Truco-game-state');
-
+          // Intentar obtener el tema del estado del juego
+          const savedGameState = localStorage.getItem('truco-game-state');
           let theme = 'system';
 
-          if (savedTheme) {
-            theme = savedTheme;
-          } else if (savedGameState) {
+          if (savedGameState) {
             const parsed = JSON.parse(savedGameState);
             theme = parsed.settings?.theme || 'system';
           }
