@@ -26,21 +26,21 @@ export const CANTOS: CantoInfo[] = [
     type: 'truco',
     name: 'Truco',
     description: 'Canto de truco',
-    basePoints: 1,
+    basePoints: 2,
     color: '#F59E0B'
   },
   {
     type: 're-truco',
     name: 'Re Truco',
     description: 'Canto de re truco',
-    basePoints: 2,
+    basePoints: 3,
     color: '#EF4444'
   },
   {
     type: 'vale-4',
     name: 'Vale 4',
     description: 'Canto de vale 4',
-    basePoints: 3,
+    basePoints: 4,
     color: '#EC4899'
   }
 ];
